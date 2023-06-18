@@ -1,0 +1,33 @@
+chat = []
+
+command = input()
+
+while command != "end":
+    action, *args = command.split()
+
+    if action == "Chat":
+        message = args[0]
+        chat.append(message)
+    elif action == "Delete":
+        message = args[0]
+        if message in chat:
+            chat = [msg for msg in chat if msg != message]
+    elif action == "Edit":
+        message = args[0]
+        edited_version = args[1]
+        if message in chat:
+            index = chat.index(message)
+            chat[index] = edited_version
+    elif action == "Pin":
+        message = args[0]
+        if message in chat:
+            chat.remove(message)
+            chat.append(message)
+    elif action == "Spam":
+        messages = args
+        chat.extend(messages)
+
+    command = input()
+
+for message in chat:
+    print(message)
