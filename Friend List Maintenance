@@ -1,0 +1,43 @@
+def blacklist_friend(name):
+    if name in friends:
+        friends[friends.index(name)] = "Blacklisted"
+        print(f"{name} was blacklisted.")
+    else:
+        print(f"{name} was not found.")
+
+
+def error_friend(index):
+    if 0 <= index < len(friends):
+        if friends[index] != "Blacklisted" and friends[index] != "Lost":
+            print(f"{friends[index]} was lost due to an error.")
+            friends[index] = "Lost"
+            
+
+
+def change_username(index, new_name):
+    if 0 <= index < len(friends):
+        old_name = friends[index]
+        friends[index] = new_name
+        print(f"{old_name} changed his username to {new_name}.")
+
+
+friends = input().split(", ")
+command = input()
+
+while command != "Report":
+    action, *args = command.split()
+    if action == "Blacklist":
+        blacklist_friend(args[0])
+    elif action == "Error":
+        error_friend(int(args[0]))
+    elif action == "Change":
+        change_username(int(args[0]), args[1])
+
+    command = input()
+
+blacklisted_count = friends.count("Blacklisted")
+lost_count = friends.count("Lost")
+
+print(f"Blacklisted names: {blacklisted_count}")
+print(f"Lost names: {lost_count}")
+print(" ".join(friends))
